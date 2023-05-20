@@ -46,6 +46,9 @@ Point Point::moveTowards(const Point& source, const Point& dest, double distance
         throw invalid_argument("There is no such a thing as negative distance");   
     }
     double distance_of_2_points = source.distance(dest);
+    if(distance >= distance_of_2_points) {
+        return dest;
+    }
     double t = distance / distance_of_2_points;
     double newX = (1 - t)*source.x + t*dest.x;
     double newY = (1 - t)*source.y + t*dest.y;

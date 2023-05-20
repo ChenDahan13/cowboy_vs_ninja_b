@@ -115,6 +115,7 @@ void Team::attack(Team* enemies) {
         if(leader == nullptr)
             return;
     }
+    
 
     Character* victim = closest_victim(enemies);
     if(victim == nullptr) 
@@ -127,14 +128,17 @@ void Team::attack(Team* enemies) {
             if(victim == nullptr) // No enemies alive
                 return;
         }
+        
         if(this->team[i]->isAlive() && this->team[i]->getType() == 0) { // Cowboys first
             Cowboy* c = dynamic_cast<Cowboy*>(this->team[i]);
+            
             if(c->hasboolets()) {
                 c->shoot(victim);
             } else {
                 c->reload();
             }
         }
+        
     }
 
     // Ninjas attack after
@@ -144,14 +148,17 @@ void Team::attack(Team* enemies) {
             if(victim == nullptr) // No enemies alive
                 return;
         }
+        
         if(this->team[i]->isAlive() && this->team[i]->getType() == 1) { // Ninjas second
             Ninja *n = dynamic_cast<Ninja*>(this->team[i]);
+            
             if(n->distance(victim) <= 1.0) { // Attack only if close to victim under 1 meter
                 n->slash(victim);
             } else {
                 n->move(victim);
             }
         }
+        
     }
 
     
