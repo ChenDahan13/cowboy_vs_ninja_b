@@ -14,6 +14,16 @@ void Ninja::move(const Character* enemy) {
 
 // Hits the enemy 
 void Ninja::slash(Character* enemy) {
+
+    if(this == enemy)
+        throw runtime_error("Ninja can't slash itself");
+
+    if(!enemy->isAlive()) 
+        throw runtime_error("Ninja can't slash a dead enemy");
+
+    if(!this->isAlive()) 
+        throw runtime_error("Dead ninja can't slash anybody");
+    
     double dist = this->distance(enemy);
     if(dist < 1.0 && this->isAlive()) {
         enemy->hit(40);

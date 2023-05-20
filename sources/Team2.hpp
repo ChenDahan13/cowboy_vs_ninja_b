@@ -13,11 +13,11 @@ using namespace ariel;
 using namespace std;
 
 
-class Team2: public Team{
+class Team2: public Team {
         
     public:
         Team2(Character* character);
-        void add(Character* character) override; 
+        
         void attack(Team* enemies) override;   
         void print() override;
         ~Team2() override;     

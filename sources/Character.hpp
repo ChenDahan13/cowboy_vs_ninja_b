@@ -13,6 +13,8 @@ class Character {
     int points;
     string name;
     int type; // 0 for cowboys, 1 for ninjas
+    bool isInTeam;
+
     
     public:
         Character(string name = "Chen", Point position = Point(0,0), int points = DEFAULT_POINTS, int type = 0);
@@ -22,6 +24,8 @@ class Character {
         Character(Character&& other) = default;
         Character& operator=(Character&& other) = default;
 
+        void setIsInTeam(bool trueORfalse);
+        bool isAlreadyInTeam();
         bool isAlive();
         double distance(const Character* other);
         void hit(int points);

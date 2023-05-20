@@ -1,7 +1,17 @@
 #include "Team.hpp"
 
 /*----------- Team Class ------------*/
-Team::Team(Character* character): leader(character) {
+Team::Team(Character* character): leader(nullptr) {
+    
+    if(character == nullptr) {
+        throw invalid_argument("The team can't get null");
+    }
+
+    if(character->isAlreadyInTeam()) {
+        throw runtime_error("The team can't get character that already in a team");
+    }
+    this->leader = character;
+    character->setIsInTeam(true);
     this->team.push_back(character);
 }
 
@@ -70,18 +80,35 @@ Team::~Team() {
     for(std::vector<Character*>::size_type i = 0; i < this->team.size() ; i++) {
         delete this->team[i];
     }
+    this->team.clear(); // Moves all the elements inside
+    this->leader = nullptr;
 }
 
 // Adds members to the team. Until 10 members
 void Team::add(Character* character) {
+
+    if(character == nullptr)
+        throw invalid_argument("Team can't add nullptr");
+    
+    if(character->isAlreadyInTeam()) {
+        throw runtime_error("The team can't add character that is already in a team");
+    }
+    
     if(this->team.size() < 10) {
+        character->setIsInTeam(true);
         this->team.push_back(character);
+    } else {
+        throw runtime_error("A team can't have more then 10 members");
     }
 }
 
 void Team::attack(Team* enemies) {
-    if(!enemies->stillAlive()) // Check first if the enemy team alive
-        return;
+
+    if(enemies == nullptr) // Checks the argument is ok
+        throw invalid_argument("Attack() function can't get as an argument nullptr");
+    
+    if(enemies->stillAlive() == 0) // Checks first if the enemy team alive
+        throw runtime_error("Attacking dead team isn't possiblie");
     
     if(!leader->isAlive()) { // If leader is dead, replace him to new one that is the closest to him
         leader = closest_team_member();

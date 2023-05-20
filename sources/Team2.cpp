@@ -8,18 +8,17 @@ Team2::~Team2() {
     for(std::vector<Character*>::size_type i = 0; i < this->team.size() ; i++) {
         delete this->team[i];
     }
-}
-
-// Adds members to the team. Until 10 members
-void Team2::add(Character* character) {
-    if(this->team.size() < 10) {
-        this->team.push_back(character);
-    }
+    this->team.clear();
+    this->leader = nullptr;
 }
 
 void Team2::attack(Team* enemies) {
-    if(!enemies->stillAlive()) // Check first if the enemy team alive
-        return;
+
+    if(enemies == nullptr) // Checks the argument is ok
+        throw invalid_argument("Attack() function can't get as an argument nullptr");
+
+    if(enemies->stillAlive() == 0) // Checks first if the enemy team alive
+        throw runtime_error("Attacking ded team isn't possible");
     
     if(!leader->isAlive()) { // If leader is dead, replace him to new one that is the closest to him
         leader = closest_team_member();
@@ -59,6 +58,6 @@ void Team2::print() {
         for(std::vector<Character*>::size_type i = 0; i < this->team.size(); i++) {
                 cout << this->team[i]->print() << endl; 
         }
-    }      
+    }   
 }
 /*------------------------------------*/
