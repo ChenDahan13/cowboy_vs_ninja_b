@@ -17,6 +17,7 @@ using namespace std;
 class Team {
 
     friend class Team2;
+    friend class SmartTeam;
     
     public:
     

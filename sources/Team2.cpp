@@ -18,7 +18,7 @@ void Team2::attack(Team* enemies) {
         throw invalid_argument("Attack() function can't get as an argument nullptr");
 
     if(enemies->stillAlive() == 0) // Checks first if the enemy team alive
-        throw runtime_error("Attacking ded team isn't possible");
+        throw runtime_error("Attacking dead team isn't possible");
     
     if(!leader->isAlive()) { // If leader is dead, replace him to new one that is the closest to him
         leader = closest_team_member();
